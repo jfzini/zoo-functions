@@ -9,13 +9,13 @@ const countAnimals = (animal) => {
     }
     return acc;
   }, {});
+
   if (animal && animal.species) {
     return Object.entries(animalsListObject)
       .find((speciesArr) => speciesArr[0] === animal.species)[1];
   }
+
   return animalsListObject;
 };
-
-console.log(countAnimals({ species: 'lions', sex: 'female' }));
 
 module.exports = countAnimals;
