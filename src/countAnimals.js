@@ -5,7 +5,7 @@ const countAnimals = (animal) => {
     acc[name] = residents.length;
     if (animal && animal.sex) {
       acc[name] = residents
-        .filter((resident) => resident.sex === animal.sex).length;
+        .filter(({ sex }) => sex === animal.sex).length;
     }
     return acc;
   }, {});
