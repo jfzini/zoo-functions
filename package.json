@@ -40,6 +40,7 @@
   },
   "homepage": "https://github.com/betrybe/sd-03-block9-project-zoo-functions#readme",
   "devDependencies": {
+    "@types/jest": "^29.4.0",
     "eslint-config-trybe-fundamentals": "1.1.0",
     "faker": "5.5.3",
     "jest": "25.2.3"
