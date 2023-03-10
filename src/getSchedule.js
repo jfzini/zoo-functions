@@ -1,23 +1,38 @@
+const { species } = require('../data/zoo_data');
 const data = require('../data/zoo_data');
 
-const validateTarget = (target) => {
-  const animalsArray = data.species.map(({name}) => name);
-  const daysSet = //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set set retira itens repetidos;
-    new Set(data.species.map(({ availability }) => availability)
-      .reduce((a, b) => a.concat(b)));
-  if (!target || !animalsArray.includes(target) || !daysSet.has(target)) {
-    return false;
-  }
-  return true;
-}
+// const validateTarget = (target) => {
+
+//   console.log(daysList);
+//   if (!target || !animalsArray.includes(target) || !daysList.includes(target)) {
+//     return false;
+//   }
+//   return true;
+// }
 
 const getSchedule = (scheduleTarget) => {
-  if (!scheduleTarget) {
-    
+  const animalsArray = species.map(({name}) => name);
+  const daysList = Object.keys(data.hours);
+
+  if (!scheduleTarget
+    || !animalsArray.includes(scheduleTarget)) {
+      return daysList.reduce((acc, curr) => {
+        acc[curr] = {
+          officeHour: `Open from ${data.hours[curr].open}am until ${data.hours[curr].close}pm`,
+          exhibition: species.filter(({ availability }) => availability.includes(curr)).map(({ name }) => name)
+        }
+        if (data.hours[curr].open === 0) {
+          acc[curr] = {
+            officeHour: 'CLOSED',
+            exhibition: 'The zoo will be closed'
+          }
+        }
+        return acc;
+      }, {})
   }
-  return data.species.find(({ name }) => name === scheduleTarget).availability;
+  return species.find(({ name }) => name === scheduleTarget).availability;
 };
 
-console.log(getSchedule('tigers'));
+console.log(getSchedule());
 
 module.exports = getSchedule;
