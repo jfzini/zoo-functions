@@ -5,11 +5,24 @@ const findEmployee = (name, parmID) => {
     const employeeByID = data.employees.find((employee) => Object.values(employee).includes(parmID));
   
   return employeeByName || employeeByID;
+};
+
+const getAllEmployess = () => {
+  return data.employees.map(({ id, firstName, lastName, responsibleFor }) => ({
+    id,
+    fullName: `${firstName} ${lastName}`,
+    species: responsibleFor.map((element) => data.species.find(({ id }) => id === element).name),
+    locations: responsibleFor.map((element) => data.species.find(({ id }) => id === element).location)
+  }));
 }
 
 const getEmployeesCoverage = (objParam) => {
-  const { name, id: parmID } = objParam;
+  if (!objParam){
+    return getAllEmployess();
+  }
+
   try {
+    const { name, id: parmID } = objParam;
     const foundEmployee = findEmployee(name, parmID);
     const { id, firstName, lastName, responsibleFor } = foundEmployee;
     return {
@@ -19,12 +32,7 @@ const getEmployeesCoverage = (objParam) => {
       locations: responsibleFor.map((element) => data.species.find(({ id }) => id === element).location)
     }
   }
-  catch {
-    throw new Error('Informações inválidas');
-  }
-  
+  catch { throw new Error('Informações inválidas') }
 };
-
-console.log(getEmployeesCoverage());
 
 module.exports = getEmployeesCoverage;
