@@ -24,8 +24,7 @@ const getSchedule = (scheduleTarget) => {
   const animalValidation = species.some(({ name }) => name === scheduleTarget);
   const daysList = Object.keys(data.hours);
 
-  if (!scheduleTarget
-    || !animalValidation) {
+  if (!scheduleTarget || !animalValidation) {
     return generateObject(daysList, scheduleTarget);
   }
   return species.find(({ name }) => name === scheduleTarget).availability;
