@@ -1,40 +1,45 @@
 const data = require('../data/zoo_data');
 
-const getAnimalMap = (options) => {
-  return data.species.reduce((acc, { location }) => {
-    if (!options || !options.includeNames) {
-      const speciesLocation = data.species.filter((animalSpecies) => animalSpecies.location === location).map((element) => element.name)
-      acc[location] = speciesLocation;
-      return acc;
-    }
-    const residentsObjArr = speciesLocation.map((speciesLocated) => ({speciesLocated: data.species.find((animal) => animal.name === speciesLocated).residents}));
-    if (options && options.sex) {
-      acc[location]
-    }
-  }, {})
-    // const animalNamesArr =
-    // acc[location] = animalSpeciesArr;
-    // if (includeNames) {
-    //   acc[location] = animalSpeciesArr.map((animalLoc) => ({[animalLoc]: data.species.find((animal) => animal.name === animalLoc).residents.map((element) => element.name)}));
-    // }
-    // if (sexParam) {
-    //   acc[location] = animalSpeciesArr.map((animalLoc) => ({[animalLoc]: data.species.find((animal) => animal.name === animalLoc).residents.filter((resident) => resident.sex === sexParam).map((element) => element.name)}));
-    // }
-    // if (sorted) {
-    //   // acc[location].map((element) => Object.values(element).sort());
-    //   acc[location] = animalSpeciesArr.map((animalLoc) => ({[animalLoc]: data.species.find((animal) => animal.name === animalLoc).residents.map((element) => element.name).sort()}));
-    // }
-  //   return acc;
-  // }, {});
-
-  // if (animal && animal.species) {
-  //   return Object.entries(animalsListObject)
-  //     .find((speciesArr) => speciesArr[0] === animal.species)[1];
-  // }
-
-  return animalsListObject;
+const getNamesArray = (speciesLocated) => {
+  const teste = data.species.find((animal) => animal.name === speciesLocated).residents.map(({ name }) => name);
+  return teste;
 }
 
-console.log(getAnimalMap({teste: 3, includeNames: false}));
+const getNamesBySex = (speciesLocated, speciesSex) => {
+  const namesBySex = data.species.find((animal) => animal.name === speciesLocated).residents.filter(({ sex }) => sex === speciesSex).map(({ name }) => name);
+  return namesBySex;
+}
+
+const getAnimalMap = (options) => data.species.reduce((acc, { location }) => {
+  const speciesLocation = data.species
+    .filter((animalSpecies) => animalSpecies.location === location)
+    .map((element) => element.name);
+  if (!options || !options.includeNames) {
+    acc[location] = speciesLocation;
+    return acc;
+  }
+
+  acc[location] = speciesLocation
+    .map((speciesLocated) => ({ [speciesLocated]: getNamesArray(speciesLocated) }));
+
+  // if (options && options.sorted) {
+  //   acc[location] = speciesLocation
+  //     .map((speciesLocated) => ({ [speciesLocated]: data.species.find((animal) => animal.name === speciesLocated).residents.map(({ name }) => name).sort() }));
+  // }
+
+  if (options && options.sex) {
+    acc[location] = speciesLocation
+      .map((speciesLocated) => ({ [speciesLocated]: getNamesBySex(speciesLocated, options.sex) }));
+  }
+
+  // if (options && options.sorted && options.sex) {
+  //   acc[location] = speciesLocation
+  //     .map((speciesLocated) => ({ [speciesLocated]: data.species.find((animal) => animal.name === speciesLocated).residents.filter(({ sex }) => sex === options.sex).map(({ name }) => name).sort() }));
+  // }
+
+  return acc;
+}, {});
+
+console.log((getAnimalMap({includeNames: true, sex: 'male'})));
 
 module.exports = getAnimalMap;
