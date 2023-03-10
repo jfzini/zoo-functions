@@ -1,38 +1,34 @@
 const { species } = require('../data/zoo_data');
 const data = require('../data/zoo_data');
 
-// const validateTarget = (target) => {
-
-//   console.log(daysList);
-//   if (!target || !animalsArray.includes(target) || !daysList.includes(target)) {
-//     return false;
-//   }
-//   return true;
-// }
+const generateObject = (daysList, scheduleTarget) => {
+  const schedule = daysList.reduce((acc, curr) => {
+    acc[curr] = {
+      officeHour: `Open from ${data.hours[curr].open}am until ${data.hours[curr].close}pm`,
+      exhibition: species
+        .filter(({ availability }) => availability.includes(curr))
+        .map(({ name }) => name),
+    };
+    if (curr === 'Monday') {
+      acc[curr] = { officeHour: 'CLOSED', exhibition: 'The zoo will be closed!' };
+    }
+    return acc;
+  }, {});
+  if (daysList.includes(scheduleTarget)) {
+    return { [scheduleTarget]: schedule[scheduleTarget] };
+  }
+  return schedule;
+};
 
 const getSchedule = (scheduleTarget) => {
-  const animalsArray = species.map(({name}) => name);
+  const animalValidation = species.some(({ name }) => name === scheduleTarget);
   const daysList = Object.keys(data.hours);
 
   if (!scheduleTarget
-    || !animalsArray.includes(scheduleTarget)) {
-      return daysList.reduce((acc, curr) => {
-        acc[curr] = {
-          officeHour: `Open from ${data.hours[curr].open}am until ${data.hours[curr].close}pm`,
-          exhibition: species.filter(({ availability }) => availability.includes(curr)).map(({ name }) => name)
-        }
-        if (data.hours[curr].open === 0) {
-          acc[curr] = {
-            officeHour: 'CLOSED',
-            exhibition: 'The zoo will be closed'
-          }
-        }
-        return acc;
-      }, {})
+    || !animalValidation) {
+    return generateObject(daysList, scheduleTarget);
   }
   return species.find(({ name }) => name === scheduleTarget).availability;
 };
-
-console.log(getSchedule());
 
 module.exports = getSchedule;
