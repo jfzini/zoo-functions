@@ -5,8 +5,7 @@ const generateObject = (daysList, scheduleTarget) => {
   const schedule = daysList.reduce((acc, curr) => {
     acc[curr] = {
       officeHour: `Open from ${data.hours[curr].open}am until ${data.hours[curr].close}pm`,
-      exhibition: species
-        .filter(({ availability }) => availability.includes(curr))
+      exhibition: species.filter(({ availability }) => availability.includes(curr))
         .map(({ name }) => name),
     };
     if (curr === 'Monday') {
@@ -14,6 +13,7 @@ const generateObject = (daysList, scheduleTarget) => {
     }
     return acc;
   }, {});
+
   if (daysList.includes(scheduleTarget)) {
     return { [scheduleTarget]: schedule[scheduleTarget] };
   }
@@ -23,7 +23,6 @@ const generateObject = (daysList, scheduleTarget) => {
 const getSchedule = (scheduleTarget) => {
   const animalValidation = species.some(({ name }) => name === scheduleTarget);
   const daysList = Object.keys(data.hours);
-
   if (!scheduleTarget || !animalValidation) {
     return generateObject(daysList, scheduleTarget);
   }

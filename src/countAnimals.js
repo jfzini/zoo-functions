@@ -1,20 +1,17 @@
 const data = require('../data/zoo_data');
 
-const countAnimals = (animal) => {
+const countAnimals = ({ sex, species } = {}) => {
   const animalsListObject = data.species.reduce((acc, { name, residents }) => {
     acc[name] = residents.length;
-    if (animal && animal.sex) {
-      acc[name] = residents
-        .filter(({ sex }) => sex === animal.sex).length;
+    if (sex) {
+      acc[name] = residents.filter(({ sex: residentSex }) => residentSex === sex).length;
     }
     return acc;
   }, {});
-
-  if (animal && animal.species) {
+  if (species) {
     return Object.entries(animalsListObject)
-      .find((speciesArr) => speciesArr[0] === animal.species)[1];
+      .find((speciesArr) => speciesArr[0] === species)[1];
   }
-
   return animalsListObject;
 };
 

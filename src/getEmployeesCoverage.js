@@ -30,9 +30,7 @@ const getAllEmployess = () => data.employees.map(({ id, firstName, lastName, res
 }));
 
 const getEmployeesCoverage = (objParam) => {
-  if (!objParam) {
-    return getAllEmployess();
-  }
+  if (!objParam) return getAllEmployess();
   try {
     return getSpecificEmployee(objParam);
   } catch (error) {
