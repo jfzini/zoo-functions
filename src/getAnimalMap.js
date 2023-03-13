@@ -1,6 +1,6 @@
 const data = require('../data/zoo_data');
 
-const generateAnimalObj = (paramName, { sex = false, sorted = false }) => {
+const generateAnimalObj = (paramName, { sex, sorted }) => {
   const animalObj = {};
   let animalNames = data.species.find(({ name: curName }) => paramName === curName).residents
     .map(({ name }) => name);
