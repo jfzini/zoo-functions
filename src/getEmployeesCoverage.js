@@ -4,9 +4,9 @@ const getAllEmployess = () => data.employees.map(({ id, firstName, lastName, res
   id,
   fullName: `${firstName} ${lastName}`,
   species: responsibleFor
-    .map((element) => data.species.find((animal) => animal.id === element).name),
+    .map((curAnimal) => data.species.find(({ id: curId }) => curId === curAnimal).name),
   locations: responsibleFor
-    .map((element) => data.species.find((animal) => animal.id === element).location),
+    .map((curAnimal) => data.species.find(({ id: curId }) => curId === curAnimal).location),
 }));
 
 const getEmployeesCoverage = (objParam) => {
