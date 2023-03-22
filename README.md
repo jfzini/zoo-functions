@@ -1,6 +1,6 @@
 # Zoo Functions project:
 
-Hi there! This is the repository for the Zoo Functions project. I developed it in march 2023, during Trybe's Web Development course as requirement to get my Certificate in Fundamentals of Web Development.
+Hi there! This is the repository for the Zoo Functions project. I developed it in march 2023, during Trybe's Web Development course as requirement to get my Certificate in Fundamentals of Web Development. This READ.ME is still being written.
 
 <details>
 	<summary><strong> 📁 Files provided</strong></summary><br />
