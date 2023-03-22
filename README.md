@@ -54,8 +54,8 @@ In order to be approved, the following requirements were met:
 
 	It should verify if a person is a manager and, if so, which employees they're responsible for.
 
-[x] The function <code>isManager</code>should return 'true' if it receives a manager id's as argument, or 'false' if not.<br>
-[x] The function <code>getRelatedEmployees</code>should return the employees that the respective manager is responsible for:
+- [x] The function <code>isManager</code>should return 'true' if it receives a manager id's as argument, or 'false' if not.<br>
+- [x] The function <code>getRelatedEmployees</code>should return the employees that the respective manager is responsible for:
 - In case the ID passed as argument is from a manager, it should return an array of the related employees.
 - In case the ID is not from a manager it should throw an error with the message 'O id inserido não é de uma pessoa colaboradora gerente!'.
 <br>
